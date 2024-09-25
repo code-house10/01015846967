@@ -488,6 +488,121 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <script src="js/main.js"></script>
 
 
+
+	<!-- Countdown Timer Container -->
+<div id="countdown-wrapper" class="countdown-wrapper">
+    <div class="countdown-circle">
+        <div class="countdown-number" id="days">02</div>
+        <svg width="60" height="60">
+            <circle cx="30" cy="30" r="25" stroke="#ddd" stroke-width="5" fill="none"></circle>
+            <circle id="days-circle" cx="30" cy="30" r="25" stroke="orange" stroke-width="5" fill="none" stroke-dasharray="157" stroke-dashoffset="40"></circle>
+        </svg>
+    </div>
+    <div class="countdown-circle">
+        <div class="countdown-number" id="hours">09</div>
+        <svg width="60" height="60">
+            <circle cx="30" cy="30" r="25" stroke="#ddd" stroke-width="5" fill="none"></circle>
+            <circle id="hours-circle" cx="30" cy="30" r="25" stroke="orange" stroke-width="5" fill="none" stroke-dasharray="157" stroke-dashoffset="40"></circle>
+        </svg>
+    </div>
+    <div class="countdown-circle">
+        <div class="countdown-number" id="minutes">20</div>
+        <svg width="60" height="60">
+            <circle cx="30" cy="30" r="25" stroke="#ddd" stroke-width="5" fill="none"></circle>
+            <circle id="minutes-circle" cx="30" cy="30" r="25" stroke="orange" stroke-width="5" fill="none" stroke-dasharray="157" stroke-dashoffset="40"></circle>
+        </svg>
+    </div>
+    <div class="countdown-circle">
+        <div class="countdown-number" id="seconds">17</div>
+        <svg width="60" height="60">
+            <circle cx="30" cy="30" r="25" stroke="#ddd" stroke-width="5" fill="none"></circle>
+            <circle id="seconds-circle" cx="30" cy="30" r="25" stroke="orange" stroke-width="5" fill="none" stroke-dasharray="157" stroke-dashoffset="40"></circle>
+        </svg>
+    </div>
+</div>
+
+<!-- External CSS for Countdown Timer -->
+<style>
+    .countdown-wrapper {
+        display: flex;
+        justify-content: center;
+        gap: 30px;
+        margin-bottom: 20px;
+    }
+
+    .countdown-circle {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .countdown-number {
+        position: absolute;
+        font-size: 16px;
+        font-weight: bold;
+        color: #fff;
+    }
+
+    svg {
+        transform: rotate(-90deg);
+    }
+</style>
+
+<!-- Countdown Timer JavaScript -->
+<script>
+    (function() {
+        // Set up countdown date
+        var countdownDate = new Date();
+        countdownDate.setDate(countdownDate.getDate() + 2); // Set your countdown end date here
+
+        // Function to update countdown
+        function updateCountdown() {
+            var now = new Date().getTime();
+            var distance = countdownDate - now;
+
+            // Time calculations for days, hours, minutes, and seconds
+            var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            // Display the results
+            document.getElementById('days').innerHTML = ('0' + days).slice(-2);
+            document.getElementById('hours').innerHTML = ('0' + hours).slice(-2);
+            document.getElementById('minutes').innerHTML = ('0' + minutes).slice(-2);
+            document.getElementById('seconds').innerHTML = ('0' + seconds).slice(-2);
+
+            // Update circle progress
+            updateCircle('days-circle', days / 5 * 157); // Assuming countdown for 5 days
+            updateCircle('hours-circle', hours / 24 * 157);
+            updateCircle('minutes-circle', minutes / 60 * 157);
+            updateCircle('seconds-circle', seconds / 60 * 157);
+
+            // Stop countdown when finished
+            if (distance < 0) {
+                clearInterval(interval);
+                document.getElementById('days').innerHTML = '00';
+                document.getElementById('hours').innerHTML = '00';
+                document.getElementById('minutes').innerHTML = '00';
+                document.getElementById('seconds').innerHTML = '00';
+            }
+        }
+
+        // Update circle function
+        function updateCircle(id, offset) {
+            document.getElementById(id).style.strokeDashoffset = 157 - offset;
+        }
+
+        // Run countdown every second
+        var interval = setInterval(updateCountdown, 1000);
+    })();
+</script>
+
+
+
+
+
 </body>
 
 </html>
